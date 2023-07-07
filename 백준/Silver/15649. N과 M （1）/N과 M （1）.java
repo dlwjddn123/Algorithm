@@ -25,8 +25,9 @@ public class Main {
 
     public static void go(int n) {
         if (depth == M) {
-            Arrays.stream(nums).forEach(num -> sb.append(num + " "));
-            sb.deleteCharAt(sb.length() - 1);
+            for (int c : nums) {
+                sb.append(c + " ");
+            }
             sb.append("\n");
             return;
         }
