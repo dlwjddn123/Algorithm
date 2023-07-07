@@ -28,6 +28,7 @@ public class Main {
             for (int c : nums) {
                 sb.append(c + " ");
             }
+            sb.deleteCharAt(sb.length() - 1);
             sb.append("\n");
             return;
         }
