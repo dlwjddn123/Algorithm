@@ -1,34 +1,44 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Stack;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static Stack<Integer> nums;
-    public static int N, M;
+    public static int[] nums;
+    public static boolean[] visited;
+    public static int N, M, depth;
+    public static StringBuilder sb;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        nums = new Stack<>();
-        go(1);
+        nums = new int[M];
+        visited = new boolean[N + 1];
+        sb = new StringBuilder();
+        depth = 0;
+        go(0);
+        System.out.println(sb);
     }
 
-    public static void go(int num) {
-        if (nums.size() == M) {
-            System.out.println(nums.stream().map(n -> n.toString()).collect(Collectors.joining(" ")));
+    public static void go(int n) {
+        if (depth == M) {
+            Arrays.stream(nums).forEach(num -> sb.append(num + " "));
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append("\n");
             return;
         }
-        for (int i = 1; i <= N; i++) {
-            if (!nums.isEmpty() && nums.contains(i)) {
-                continue;
+        for (int i = 0; i < N; i++) {
+            if (!visited[i]) {
+                depth += 1;
+                nums[n] = i + 1;
+                visited[i] = true;
+                go(n + 1);
+                visited[i] = false;
+                depth -= 1;
             }
-            nums.push(i);
-            go(num + 1);
-            nums.pop();
         }
     }
 }
