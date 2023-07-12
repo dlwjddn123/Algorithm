@@ -36,16 +36,14 @@ public class Main {
     }
 
     public static void dfs(int node, int cnt) {
-        boolean isLeaf = true;
+        if (node != 1 && nodes.get(node).size() == 1) {
+            count += cnt;
+        }
         visited[node] = true;
         for (int idx : nodes.get(node)) {
             if (!visited[idx]) {
-                isLeaf = false;
                 dfs(idx, cnt + 1);
             }
-        }
-        if (isLeaf) {
-            count += cnt;
         }
     }
 }
