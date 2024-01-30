@@ -80,46 +80,46 @@ public class Main {
     }
 
     public static void findSafetyArea(WallPoints wallPoints) {
-        int[][] cloneArea = areaClone();
-        checkWallPoints(wallPoints, cloneArea);
-        virusDiffusion(cloneArea);
+        makeWall(wallPoints);
+        int virusAreaCount = virusDiffusion();
         int safetyAreaCount = 0;
 
         for (int row = 0; row < N; row++) {
             for (int col = 0; col < M; col++) {
-                if (cloneArea[row][col] == EMPTY) {
+                if (area[row][col] == EMPTY) {
                     safetyAreaCount += 1;
                 }
             }
         }
-        result.add(safetyAreaCount);
+        result.add(safetyAreaCount - virusAreaCount);
+        removeWall(wallPoints);
     }
 
-    public static int[][] areaClone() {
-        int[][] cloneArea = new int[N][M];
-        for (int i = 0; i < cloneArea.length; i++) {
-            cloneArea[i] = area[i].clone();
+    public static void removeWall(WallPoints wallPoints) {
+        for (Point point : wallPoints.getPoints()) {
+            area[point.getY()][point.getX()] = EMPTY;
         }
-        return cloneArea;
     }
 
-    public static void virusDiffusion(int[][] cloneArea) {
+    public static int  virusDiffusion() {
         boolean[][] visited = new boolean[N][M];
         Queue<Point> queue = new LinkedList<>();
         setStartPoints(queue);
+        int virusAreaCount = 0;
 
         while (!queue.isEmpty()) {
             Point point = queue.poll();
             for (int i = 0; i < 4; i++) {
                 int nx = dx[i] + point.getX();
                 int ny = dy[i] + point.getY();
-                if (0 <= nx && nx < M && 0 <= ny && ny < N && !visited[ny][nx] && cloneArea[ny][nx] == EMPTY) {
+                if (0 <= nx && nx < M && 0 <= ny && ny < N && !visited[ny][nx] && area[ny][nx] == EMPTY) {
                     visited[ny][nx] = true;
                     queue.add(new Point(nx, ny));
-                    cloneArea[ny][nx] = VIRUS;
+                    virusAreaCount += 1;
                 }
             }
         }
+        return virusAreaCount;
     }
 
     public static void setStartPoints(Queue<Point> queue) {
@@ -128,9 +128,9 @@ public class Main {
         }
     }
 
-    public static void checkWallPoints(WallPoints wallPoints, int[][] cloneArea) {
+    public static void makeWall(WallPoints wallPoints) {
         for (Point point : wallPoints.getPoints()) {
-            cloneArea[point.getY()][point.getX()] = WALL;
+            area[point.getY()][point.getX()] = WALL;
         }
     }
 
