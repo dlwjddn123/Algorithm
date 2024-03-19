@@ -1,5 +1,5 @@
 def solution(sequence, k):
-    answer = []
+    answer = None
     total = 0
     p1 = 0
     p2 = 0
@@ -18,9 +18,12 @@ def solution(sequence, k):
 
         if total + sequence[p2] == k:
             total += sequence[p2]
-            answer.append([p1, p2])
+            if answer == None:
+                answer = [p1, p2]
+            else:
+                if (answer[1] - answer[0]) > (p2 - p1):
+                    answer = [p1, p2]
             if p2 == len(sequence) - 1:
                 break
             p2 += 1
-    answer.sort(key=lambda x : [x[1]-x[0], x[0]])
-    return answer[0]
+    return answer
