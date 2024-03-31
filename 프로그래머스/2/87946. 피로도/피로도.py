@@ -8,7 +8,17 @@ def solution(k, dungeons):
     answer = max(result)
     return answer
 
-def find(k, dungeons, count, visited):    
+def find(k, dungeons, count, visited):
+    if k < 0:
+        result.append(count-1)
+        return
+    elif k == 0:
+        result.append(count)
+        return
+    elif count >= len(dungeons):
+        result.append(count)
+        return
+    
     for i in range(len(dungeons)):
         if visited[i]:
             continue
@@ -17,6 +27,7 @@ def find(k, dungeons, count, visited):
             visited[i] = True
             find(k - dungeons[i][1], dungeons, count + 1, visited)
             visited[i] = False
+            
     result.append(count)
-    return 
+    return
     
