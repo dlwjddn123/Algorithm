@@ -15,7 +15,7 @@ def find(x, y, n):
     
     while queue:
         x, count = queue.popleft()
-        temp = [x * 3, x * 2, x + n]
+        temp = [x + n, x * 2, x * 3]
         
         for nx in temp:
             if nx == y:
