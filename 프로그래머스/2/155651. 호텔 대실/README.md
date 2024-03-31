@@ -1,10 +1,10 @@
 # [level 2] 호텔 대실 - 155651 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/155651) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/155651#) 
 
 ### 성능 요약
 
-메모리: 10.6 MB, 시간: 265.21 ms
+메모리: 10.6 MB, 시간: 2.54 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 03월 31일 14:41:32
+2024년 03월 31일 14:47:13
 
 ### 문제 설명
 
