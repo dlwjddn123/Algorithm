@@ -19,7 +19,7 @@ class Solution {
             q2Sum += queue2[i];
         }
         
-        while (count < (queue1.length + queue2.length) * 2 + 2) {
+        while (count < (queue1.length + queue2.length) * 2) {
             if (q1Sum == q2Sum) {
                 return count;
             }
