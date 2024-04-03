@@ -1,44 +1,36 @@
 import java.util.*;
 
 class Solution {
-    public long solution(int[] weights) {
-        long answer = 0;
-        boolean[] visited = new boolean[1001];
-        int[] counts = new int[1001];
-        int[][] c = new int[][]{{2, 2}, {2, 3}, {2, 4}, {3, 2}, {3, 4}, {4, 2}, {4, 3}};
-        Map<Integer, Integer> map = new HashMap<>();
-        Arrays.sort(weights);
-        
-        for (int i = 0 ; i < weights.length; i++) {
-            if (map.get(weights[i]) == null) {
-                map.put(weights[i], 1);
-                continue;
-            }
-            map.put(weights[i], map.get(weights[i]) + 1);
-        }
-        
-        for (int i = 0; i < weights.length - 1; i++) {
-            if (!visited[weights[i]]) {
-                visited[weights[i]] = true;
-                int count = 0;
-                for (int j = i + 1; j < weights.length; j++) {
-                    if (weights[i] == weights[j]) {
-                        continue;
-                    }
-                    for (int k = 0; k < c.length; k++) {
-                        if (weights[i] * c[k][0] == weights[j] * c[k][1]) {
-                            count += 1;
-                            break;
-                        }
-                    }
-                }
-                counts[weights[i]] = count;
-            }
-            answer += counts[weights[i]] + (map.get(weights[i]) - 1);
-            map.put(weights[i], map.get(weights[i]) - 1);
+    public Long solution(int[] weights) {
+        Long answer = 0L;
+        Map<Long, Long> torqueMap = new HashMap<>();
+        Map<Long, Long> weightCount = new HashMap<>(); // 각 무게의 등장 횟수를 추적
 
+        for (long weight : weights) {
+            // 무게의 등장 횟수를 업데이트
+            weightCount.put(weight, weightCount.getOrDefault(weight, 0L) + 1);
+            Long[] torques = {weight * 2, weight * 3, weight * 4};
+                for (Long torque : torques) {
+                    torqueMap.put(torque, torqueMap.getOrDefault(torque, 0L) + 1);
+                }
         }
-        
-        return answer;
+
+        // 토크값에 따른 짝꿍의 수를 계산합니다.
+        for (Long count : torqueMap.values()) {
+            if (count > 1) {
+                answer += (Long) count * (count - 1) / 2;
+            }
+        }
+
+
+        // 중복으로 들어간 값들 계산
+        Long minus = 0L;
+        for (Long count : weightCount.values()) {
+            if(count > 1){
+                minus+= ((Long) count * (count - 1) / 2)*2;
+            }
+        }
+
+        return answer - minus;
     }
 }
