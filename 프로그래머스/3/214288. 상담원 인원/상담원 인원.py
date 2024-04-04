@@ -1,44 +1,48 @@
-from collections import deque
-import heapq
-
-cases = []
+from heapq import heappush, heappop
 
 def solution(k, n, reqs):
-    answer = 0
-    reqs.sort(key=lambda x : [x[0], x[1]])
-    findCase([], n, k, 0)
-    result = []
-    print(reqs)
-    for case in cases:
-        waitingTime = 0
-        mento = [[] for _ in range(k+1)]
-        for req in reqs:
-            if len(mento[req[2]]) < case[req[2]-1]:
-                heapq.heappush(mento[req[2]], req[0] + req[1])
-                continue
-            
-            at = heapq.heappop(mento[req[2]])
-            
-            if at > req[0]:
-                waitingTime += at - req[0]
-                heapq.heappush(mento[req[2]], at + req[1])
-                continue
-            heapq.heappush(mento[req[2]], req[0] + req[1])
-            
-        result.append(waitingTime)    
-    return min(result)
 
-def findCase(cur, n, k, total):
-    if len(cur) == k-1:
-        temp = cur[:]
-        temp.append(n - total)
-        cases.append(temp)
-        return
-    
-    for i in range(1, n):
-        if total + i >= n:
-            continue
-        cur.append(i)
-        findCase(cur, n, k, total+i)
-        cur.pop()
-        
+    max_n = n - k
+    wait_k = []
+    map_k_reqs = {}
+    wait_init = 0
+    wait_diff = []
+
+    for k_ in range(k):
+        map_k_reqs[k_] = []
+
+    for r in reqs:
+        map_k_reqs[r[2] - 1].append(r[:2])
+
+    for k_ in range(k):
+        wait_k_ = 0
+
+        for n_ in range(max_n + 1):
+            heap_n = []
+            wait_time = 0
+
+            for _ in range(n_ + 1):
+                heappush(heap_n, 0)
+
+            for req in map_k_reqs[k_]:
+                min_time = heappop(heap_n)
+
+                if min_time <= req[0]:
+                    heappush(heap_n, req[0] + req[1])
+                else:
+                    wait_time += min_time - req[0]
+                    heappush(heap_n, min_time + req[1])
+
+            if n_ == 0:
+                wait_init += wait_time
+            else:
+                heappush(wait_diff, wait_time - wait_k_)
+
+            wait_k_ = wait_time
+
+    wait_min = wait_init
+
+    for _ in range(max_n):
+        wait_min += heappop(wait_diff)
+
+    return wait_min
