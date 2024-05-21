@@ -8,23 +8,23 @@ class Solution {
     public int solution(String word) {
         Map<String, Integer> dict = new HashMap<>();
         
-        recordOrderAllWordsToDict(dict, new ArrayList<>());
+        recordOrderAllWordsToDict(dict, new StringBuilder());
         
         return dict.get(word);
     }
     
-    public void recordOrderAllWordsToDict(Map<String, Integer> dict, List<String> word) {
+    public void recordOrderAllWordsToDict(Map<String, Integer> dict, StringBuilder word) {
         number += 1;
-        dict.put(String.join("", word), number);
+        dict.put(String.join("", word.toString()), number);
         
-        if (word.size() == MAX_LENGTH) {
+        if (word.length() == MAX_LENGTH) {
             return;
         }
         
         for (int i = 0; i < MAX_LENGTH; i++) {
-            word.add(alpha[i]);
+            word.append(alpha[i]);
             recordOrderAllWordsToDict(dict, word);
-            word.remove(word.size() - 1);
+            word.deleteCharAt(word.length() - 1);
         }
     }
 }
