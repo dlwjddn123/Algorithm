@@ -1,20 +1,15 @@
 // import java.util.*;
 
 // class Solution {
-    
 //     static int R;
 //     static int C; 
 //     static Map<Integer, Point> pointMap = new HashMap<>();
-//     static final int[] dx = {0, 0, -1, 1};
-//     static final int[] dy = {-1, 1, 0, 0};
     
 //     class Point {
 //         int x, y;
-//         Point parent;
 //         public Point(int x, int y) {
 //             this.x = x;
 //             this.y = y;
-//             this.parent = null;
 //         }
         
 //         @Override
@@ -102,48 +97,24 @@
 //         for (int i = 1; i < routePoints.length; i++) {
 //             Point start = pointMap.get(routePoints[i - 1]);
 //             Point end = pointMap.get(routePoints[i]);
-//             bfs(start, end, shortestRoute);
+//             int r = start.y;
+//             int c = start.x;
+            
+//             if (shortestRoute.isEmpty()) {
+//                 shortestRoute.add(new Point(r, c));
+//             }
+            
+//             while (r != end.y) {
+//                 r += (r > end.y) ? -1 : 1;
+//                 shortestRoute.add(new Point(r, c));
+//             }
+            
+//             while (c != end.x) {
+//                 c += (c > end.x) ? -1 : 1;
+//                 shortestRoute.add(new Point(r, c));
+//             }
 //         }
 //         return shortestRoute;
-//     }
-    
-//     public void bfs(Point start, Point end, List<Point> shortestRoute) {
-//         boolean[][] visited = new boolean[R + 1][C + 1];
-//         visited[start.y][start.x] = true;
-//         Queue<Point> queue = new LinkedList<>();
-//         queue.add(start);
-//         if (shortestRoute.size() == 0) {
-//             shortestRoute.add(start);
-//         }
-        
-//         while(!queue.isEmpty()) {
-//             Point current = queue.poll();
-//             if (current.x == end.x && current.y == end.y) {
-//                 shortestRoute.addAll(getRoute(current));
-//                 break;
-//             }
-//             for (int i = 0; i < 4; i++) {
-//                 int nx = current.x + dx[i];
-//                 int ny = current.y + dy[i];
-
-//                 if (0 < nx && nx <= C && 0 < ny && ny <= R && !visited[ny][nx]) {
-//                     visited[ny][nx] = true;
-//                     Point next = new Point(nx, ny);
-//                     next.parent = current;
-//                     queue.add(next);
-//                 }            
-//             }            
-//         }
-//     }
-    
-//     public List<Point> getRoute(Point point) {
-//         List<Point> route = new ArrayList<>();
-//         while (point.parent != null) {
-//             route.add(point);
-//             point = point.parent;
-//         }
-//         Collections.reverse(route);
-//         return route;
 //     }
     
 // }
