@@ -22,10 +22,11 @@ public class Main {
 
         for (int i = 0; i < M; i++) {
             String input = br.readLine();
-            if (input.matches("^[a-zA-Z]*")) {
-                System.out.println(nameMap.get(input));
-            } else if (input.matches("^[0-9]*")) {
+            boolean isNumber = 10 > input.charAt(0) - 48;
+            if (isNumber) {
                 System.out.println(numberMap.get(Integer.parseInt(input)));
+            } else {
+                System.out.println(nameMap.get(input));
             }
         }
     }
