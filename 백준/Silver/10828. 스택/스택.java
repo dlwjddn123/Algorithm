@@ -7,6 +7,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
         List<Integer> stack = new ArrayList<>();
 
@@ -18,21 +19,22 @@ public class Main {
                     break;
                 case "pop":
                     if (stack.isEmpty()) {
-                        System.out.println(-1);
+                        sb.append("-1\n");
                     } else {
-                        System.out.println(stack.get(stack.size() - 1));
+                        sb.append((stack.get(stack.size() - 1))).append("\n");
                         stack.remove(stack.size() - 1);
                     }
                     break;
                 case "size":
-                    System.out.println(stack.size());
+                    sb.append(stack.size() + "\n");
                     break;
                 case "empty":
-                    System.out.println((stack.isEmpty()) ? 1 : 0);
+                    sb.append((stack.isEmpty()) ? 1 : 0).append("\n");
                     break;
                 case "top":
-                    System.out.println((stack.isEmpty()) ? -1 : stack.get(stack.size() - 1));
+                    sb.append((stack.isEmpty()) ? -1 : stack.get(stack.size() - 1)).append("\n");
             }
         }
+        System.out.println(sb.toString());
     }
 }
